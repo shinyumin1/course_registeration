@@ -1,0 +1,18 @@
+/* 테이블 보더 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse; /* 테이블 셀 보더를 하나로 합침 */
+}
+
+th, td {
+    border: 1px solid black; /* 각 셀에 보더 적용 */
+    padding: 6px; /* 셀 내부 여백 조정 */
+    text-align: center;
+    font-size: 12px; /* 폰트 크기 조정 */
+}
+
+/* 헤더 스타일 */
+thead th {
+    background-color: #f2f2f2; /* 헤더 배경색 */
+    padding: 8px; /* 헤더 셀 내부 여백 조정 */
+}

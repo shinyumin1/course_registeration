@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인별 강의 시간표</title>
+    <style>
+        @import url("table.css");
+    </style>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <link href="css/table.css" rel="stylesheet"/>
+</head>
+
+<script type="text/javascript">
+    window.onload = function () {
+        // 저장된 강의 시간 정보를 확인하고 색칠
+        const highlightedClassTimes = JSON.parse(localStorage.getItem('highlightedClassTimes')) || [];
+        highlightedClassTimes.forEach(classTime => {
+            highlightClassTime(classTime);
+        });
+        const registeredClasses=JSON.parse(localStorage.getItem('registeredClasses'))||[];
+        registeredClasses.forEach(courseInfo=>{
+            displayCourseInfo(courseInfo);
+        });
+        
+    };
+
+    function highlightClassTime(classTime) {
+        const timeSlots = {
+            "화7,8": ["tue-7", "tue-8"],
+            "화10,11,12": ["tue-10", "tue-11", "tue-12"],
+            "화5,6/목 6":["tue-5","tue-6","thu-6"],
+            "화7/목7,8":["tue-7","thu-7","thu-8"],
+            "월2/수1,2":["mon-2","wed-1","wed-2"],
+            "수10,11,12":["wed-10","wed-11","wed-12"],
+            "목7,8,9":["thu-7","thu-8","thu-9"],
+            "금5,6,7":["fri-5","fri-6","fri-7"]
+
+            // 필요한 시간대와 대응하는 클래스 이름을 추가
+        };
+   
+        if (timeSlots[classTime]) {
+            timeSlots[classTime].forEach(slot => {
+                const cell = document.querySelector(`.${slot}`);
+                if (cell) {
+                    cell.style.backgroundColor = "yellow"; // 색상을 노란색으로 변경
+                    
+                }
+            });
+        }
+    }
+    
+    function displayCourseInfo(courseInfo){
+        const { time,className} = courseInfo; 
+        const timeSlots = {
+            "화7,8": ["tue-7", "tue-8"],
+            "화10,11,12": ["tue-10", "tue-11", "tue-12"],
+            "화5,6/목 6":["tue-5","tue-6","thu-6"],
+            "화7/목7,8":["tue-7","thu-7","thu-8"],
+            "월2/수1,2":["mon-2","wed-1","wed-2"],
+            "수10,11,12":["wed-10","wed-11","wed-12"],
+            "목7,8,9":["thu-7","thu-8","thu-9"],
+            "금5,6,7":["fri-5","fri-6","fri-7"]
+        }
+        const slot = timeSlots[time]; 
+        slot.forEach(timeSlot=>{
+            const cell=document.querySelector(`.${timeSlot}`);
+            if (cell){
+                cell.textContent=className;
+            }
+        });
+   }
+</script>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="notice">
+                <h1> ► 2024학년도 하계학기 개인별 강의 시간표</h1>
+                <div class="notice">
+                    <p style="font-weight:bold;">
+                        <ul><span style="color: red;">※ 다빈치캠퍼스 개설과목 수강시 시간은 다빈치캠퍼스의 시간을 고려하시기 바랍니다.</span></ul>
+                    </p>
+                    <div id="table-view" class="view">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td colspan="3">시간/요일</td>
+                                    <th>월요일(Mon)</th>
+                                    <th>화요일(Tue)</th>
+                                    <th>수요일(Wed)</th>
+                                    <th>목요일(Thu)</th>
+                                    <th>금요일(Fri)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td></td>
+                                    <td>08:00</td>
+                                    <td class="mon-0"></td>
+                                    <td class="tue-0"></td>
+                                    <td class="wed-0"></td>
+                                    <td class="thu-0"></td>
+                                    <td class="fri-0"></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>A</td>
+                                    <td>09:00</td>
+                                    <td class="mon-1"></td>
+                                    <td class="tue-1"></td>
+                                    <td class="wed-1"></td>
+                                    <td class="thu-1"></td>
+                                    <td class="fri-1"></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>B</td>
+                                    <td>10:00</td>
+                                    <td class="mon-2"></td>
+                                    <td class="tue-2"></td>
+                                    <td class="wed-2"></td>
+                                    <td class="thu-2"></td>
+                                    <td class="fri-2"></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>B</td>
+                                    <td>11:00</td>
+                                    <td class="mon-3"></td>
+                                    <td class="tue-3"></td>
+                                    <td class="wed-3"></td>
+                                    <td class="thu-3"></td>
+                                    <td class="fri-3"></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>C</td>
+                                    <td>12:00</td>
+                                    <td class="mon-4"></td>
+                                    <td class="tue-4"></td>
+                                    <td class="wed-4"></td>
+                                    <td class="thu-4"></td>
+                                    <td class="fri-4"></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>D</td>
+                                    <td>13:00</td>
+                                    <td class="mon-5"></td>
+                                    <td class="tue-5"></td>
+                                    <td class="wed-5"></td>
+                                    <td class="thu-5"></td>
+                                    <td class="fri-5"></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>D</td>
+                                    <td>14:00</td>
+                                    <td class="mon-6"></td>
+                                    <td class="tue-6"></td>
+                                    <td class="wed-6"></td>
+                                    <td class="thu-6"></td>
+                                    <td class="fri-6"></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>E</td>
+                                    <td>15:00</td>
+                                    <td class="mon-7"></td>
+                                    <td class="tue-7"></td>
+                                    <td class="wed-7"></td>
+                                    <td class="thu-7"></td>
+                                    <td class="fri-7"></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>E</td>
+                                    <td>16:00</td>
+                                    <td class="mon-8"></td>
+                                    <td class="tue-8"></td>
+                                    <td class="wed-8"></td>
+                                    <td class="thu-8"></td>
+                                    <td class="fri-8"></td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>F</td>
+                                    <td>17:00</td>
+                                    <td class="mon-9"></td>
+                                    <td class="tue-9"></td>
+                                    <td class="wed-9"></td>
+                                    <td class="thu-9"></td>
+                                    <td class="fri-9"></td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>G</td>
+                                    <td>18:00</td>
+                                    <td class="mon-10"></td>
+                                    <td class="tue-10"></td>
+                                    <td class="wed-10"></td>
+                                    <td class="thu-10"></td>
+                                    <td class="fri-10"></td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>H</td>
+                                    <td>19:00</td>
+                                    <td class="mon-11"></td>
+                                    <td class="tue-11"></td>
+                                    <td class="wed-11"></td>
+                                    <td class="thu-11"></td>
+                                    <td class="fri-11"></td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td>I</td>
+                                    <td>20:00</td>
+                                    <td class="mon-12"></td>
+                                    <td class="tue-12"></td>
+                                    <td class="wed-12"></td>
+                                    <td class="thu-12"></td>
+                                    <td class="fri-12"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="list-view" class="view" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

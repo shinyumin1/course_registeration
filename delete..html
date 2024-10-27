@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청 시스템</title>
+    <style> @import url("search.css");</style>
+    <link href="css/search.css" rel="stylesheet"/>
+</head>
+<body>
+    <table id = stable>
+        <tr>
+            <td>신청개수</td>
+            <td>신청학점</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>20</td>
+        </tr>
+    </table>
+    <table id = ttable>
+        <thead>
+            <tr>
+            <th>삭제</th>
+            <th>캠퍼스</th>
+            <th>과목번호-분반</th>
+            <th>과목명</th>
+            <th>폐강</th>
+            <th>이수구분</th>
+            <th>교양영역</th>
+            <th>재수강</th>
+            <th>학점</th>
+            <th>담당교수</th>
+            <th>강의시간</th>
+            <th>유연한기</th>
+            <th>기이수</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><button class = "button1" id= btn_>삭제</button></td>
+                <td>서울</td>
+                <td>56424-01</td>
+                <td>AI시대문제해결을위한디자인사고</td>
+                <td></td>
+                <td>교양</td>
+                <td></td>
+                <td></td>
+                <td>2</td>
+                <td>진영기</td>
+                <td>화 7,8 310관 723호</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button class = "button2" id= btn_>삭제</button></td>
+                <td>서울</td>
+                <td>40989-01</td>
+                <td>자료구조</td>
+                <td></td>
+                <td>전필</td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+                <td>김무철</td>
+                <td>화5,6/목6 310관 729호</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button class = "button3" id= btn_>삭제</button></td>
+                <td>서울</td>
+                <td>40989-02</td>
+                <td>자료구조</td>
+                <td></td>
+                <td>전필</td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+                <td>김무철</td>
+                <td>화7/ 목7,8 310관 727호</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button class = "button4" id= btn_>삭제</button></td>
+                <td>서울</td>
+                <td>40989-03</td>
+                <td>자료구조</td>
+                <td></td>
+                <td>전필</td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+                <td>고윤용</td>
+                <td>월2 / 수1,2 310관 727호</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button class = "button5" id= btn_>삭제</button></td>
+                <td>서울</td>
+                <td>11708-01</td>
+                <td>소프트웨어공학</td>
+                <td></td>
+                <td>전필</td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+                <td>이찬근</td>
+                <td>화10,11,12</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button class = "button6" id= btn_>삭제</button></td>
+                <td>서울</td>
+                <td>11708-02</td>
+                <td>소프트웨어공학</td>
+                <td></td>
+                <td>전필</td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+                <td>이찬근</td>
+                <td>수10,11,12</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button class = "button7" id= btn_>삭제</button></td>
+                <td>서울</td>
+                <td>11708-03</td>
+                <td>소프트웨어공학</td>
+                <td></td>
+                <td>전필</td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+                <td>김기락</td>
+                <td>화10,11,12</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class = warning>
+        <p>※ 삭제버튼 선택후 수강신청삭제를 위해 ‘삭제’버튼을 다시한번 더 클릭하시기 바랍니다.</p>
+        <p>※ 수강신청 최대학점은 13학점이며, 재수강신청은 13학점 이상 수강신청 시, 재수강 과목의 학점은 제외되므로 입력학점/확정학점과 다를 수 있으므로 반드시확인하시기 바랍니다.</p>
+        <p>※ 수강신청 마감후에는 ‘신청’된 과목만 수강확정되며 ‘삭제’된 과목은 수강확정에서 제외됩니다.</p>
+    </div>
+</body>
+<script>
+    document.addEventListener('click', function(event) {
+                // 이벤트가 "신청" 버튼에서 발생한 것인지 확인
+                if (event.target.classList.contains('button1')) {
+                    var row = event.target.closest('tr');
+                    var returnvalue = confirm("수강취소 하겠습니까?")
+                    //alert(returnvalue);
+                    var stable = document.getElementById("stable");
+                    var subjectCountCell = stable.rows[1].cells[0];
+                    //console.log(subjectCountCell.innerHTML);
+                    var creditCountCell = stable.rows[1].cells[1];
+                    //console.log(creditCountCell.innerHTML);
+                    var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    //console.log(creditToRemove);
+                    //var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    var subjectCount = parseInt(subjectCountCell.innerHTML);
+                    //console.log(subjectCount);
+                    var creditCount = parseInt(creditCountCell.innerHTML);
+                    //console.log(creditCount);
+                    var t1 = creditCount - creditToRemove;
+                    //console.log(t1);
+                    var t2  = subjectCount - 1;
+                    //console.log(t2);
+                    subjectCountCell.innerHTML = t2.toString();
+                    creditCountCell.innerHTML = t1.toString();
+                    if(returnvalue){
+                        
+                        row.remove();
+                    }
+                }else if(event.target.classList.contains('button2')) {
+                    var row = event.target.closest('tr');
+                    var returnvalue = confirm("수강취소 하겠습니까?")
+                     //alert(returnvalue);
+                     var stable = document.getElementById("stable");
+                    var subjectCountCell = stable.rows[1].cells[0];
+                    //console.log(subjectCountCell.innerHTML);
+                    var creditCountCell = stable.rows[1].cells[1];
+                    //console.log(creditCountCell.innerHTML);
+                    var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    //console.log(creditToRemove);
+                    //var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    var subjectCount = parseInt(subjectCountCell.innerHTML);
+                    //console.log(subjectCount);
+                    var creditCount = parseInt(creditCountCell.innerHTML);
+                    //console.log(creditCount);
+                    var t1 = creditCount - creditToRemove;
+                    //console.log(t1);
+                    var t2  = subjectCount - 1;
+                    //console.log(t2);
+                    subjectCountCell.innerHTML = t2.toString();
+                    creditCountCell.innerHTML = t1.toString();
+                    if(returnvalue){
+                        
+                        row.remove();
+                    }
+                }else if (event.target.classList.contains('button3')) {
+                    var row = event.target.closest('tr');
+                    var returnvalue = confirm("수강취소 하겠습니까?")
+                     //alert(returnvalue);
+                     var stable = document.getElementById("stable");
+                    var subjectCountCell = stable.rows[1].cells[0];
+                    //console.log(subjectCountCell.innerHTML);
+                    var creditCountCell = stable.rows[1].cells[1];
+                    //console.log(creditCountCell.innerHTML);
+                    var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    //console.log(creditToRemove);
+                    //var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    var subjectCount = parseInt(subjectCountCell.innerHTML);
+                    //console.log(subjectCount);
+                    var creditCount = parseInt(creditCountCell.innerHTML);
+                    //console.log(creditCount);
+                    var t1 = creditCount - creditToRemove;
+                    //console.log(t1);
+                    var t2  = subjectCount - 1;
+                    //console.log(t2);
+                    subjectCountCell.innerHTML = t2.toString();
+                    creditCountCell.innerHTML = t1.toString();
+                    if(returnvalue){
+                        
+                        row.remove();
+                    }
+                }else if (event.target.classList.contains('button4')) {
+                    var row = event.target.closest('tr');
+                    var returnvalue = confirm("수강취소 하겠습니까?")
+                     //alert(returnvalue);
+                     var stable = document.getElementById("stable");
+                    var subjectCountCell = stable.rows[1].cells[0];
+                    //console.log(subjectCountCell.innerHTML);
+                    var creditCountCell = stable.rows[1].cells[1];
+                    //console.log(creditCountCell.innerHTML);
+                    var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    //console.log(creditToRemove);
+                    //var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    var subjectCount = parseInt(subjectCountCell.innerHTML);
+                    //console.log(subjectCount);
+                    var creditCount = parseInt(creditCountCell.innerHTML);
+                    //console.log(creditCount);
+                    var t1 = creditCount - creditToRemove;
+                    //console.log(t1);
+                    var t2  = subjectCount - 1;
+                    //console.log(t2);
+                    subjectCountCell.innerHTML = t2.toString();
+                    creditCountCell.innerHTML = t1.toString();
+                    if(returnvalue){
+                        
+                        row.remove();
+                    }
+                }else if (event.target.classList.contains('button5')) {
+                    var row = event.target.closest('tr');
+                    var returnvalue = confirm("수강취소 하겠습니까?")
+                    //alert(returnvalue);
+                    var stable = document.getElementById("stable");
+                    var subjectCountCell = stable.rows[1].cells[0];
+                    //console.log(subjectCountCell.innerHTML);
+                    var creditCountCell = stable.rows[1].cells[1];
+                    //console.log(creditCountCell.innerHTML);
+                    var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    //console.log(creditToRemove);
+                    //var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    var subjectCount = parseInt(subjectCountCell.innerHTML);
+                    //console.log(subjectCount);
+                    var creditCount = parseInt(creditCountCell.innerHTML);
+                    //console.log(creditCount);
+                    var t1 = creditCount - creditToRemove;
+                    //console.log(t1);
+                    var t2  = subjectCount - 1;
+                    //console.log(t2);
+                    subjectCountCell.innerHTML = t2.toString();
+                    creditCountCell.innerHTML = t1.toString();
+                    if(returnvalue){
+                        
+                        row.remove();
+                    }
+                }else if (event.target.classList.contains('button6')) {
+                    var row = event.target.closest('tr');
+                    var returnvalue = confirm("수강취소 하겠습니까?")
+                     //alert(returnvalue);
+                     var stable = document.getElementById("stable");
+                    var subjectCountCell = stable.rows[1].cells[0];
+                    //console.log(subjectCountCell.innerHTML);
+                    var creditCountCell = stable.rows[1].cells[1];
+                    //console.log(creditCountCell.innerHTML);
+                    var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    //console.log(creditToRemove);
+                    //var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    var subjectCount = parseInt(subjectCountCell.innerHTML);
+                    //console.log(subjectCount);
+                    var creditCount = parseInt(creditCountCell.innerHTML);
+                    //console.log(creditCount);
+                    var t1 = creditCount - creditToRemove;
+                    //console.log(t1);
+                    var t2  = subjectCount - 1;
+                    //console.log(t2);
+                    subjectCountCell.innerHTML = t2.toString();
+                    creditCountCell.innerHTML = t1.toString();
+                    if(returnvalue){
+                        
+                        row.remove();
+                    }
+                }else if (event.target.classList.contains('button7')) {
+                    var row = event.target.closest('tr');
+                    var returnvalue = confirm("수강취소 하겠습니까?")
+                    //alert(returnvalue);
+                    var stable = document.getElementById("stable");
+                    var subjectCountCell = stable.rows[1].cells[0];
+                    //console.log(subjectCountCell.innerHTML);
+                    var creditCountCell = stable.rows[1].cells[1];
+                    //console.log(creditCountCell.innerHTML);
+                    var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    //console.log(creditToRemove);
+                    //var creditToRemove = parseInt(row.cells[8].innerHTML);
+                    var subjectCount = parseInt(subjectCountCell.innerHTML);
+                    //console.log(subjectCount);
+                    var creditCount = parseInt(creditCountCell.innerHTML);
+                    //console.log(creditCount);
+                    var t1 = creditCount - creditToRemove;
+                    //console.log(t1);
+                    var t2  = subjectCount - 1;
+                    //console.log(t2);
+                    subjectCountCell.innerHTML = t2.toString();
+                    creditCountCell.innerHTML = t1.toString();
+                    if(returnvalue){
+                        
+                        row.remove();
+                    }
+                }
+    });
+</script>
+</html>

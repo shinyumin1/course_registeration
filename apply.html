@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Light Gray Box</title>
+    <style>
+
+.content {
+    flex-grow: 1;
+    padding: -10px;
+}
+
+.form {
+    margin-bottom: 20px;
+}
+.form select,
+.form input {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 14px;
+}
+.form button {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th, .table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    background-color: #f5f5f5;
+}
+
+.txt-blue {
+    color: #0085ca !important;
+}
+
+.btn-menu {
+    width: 60px;
+    height: 100%;
+    background: url(../img/layout/icon-menu.png) no-repeat 50% 50%;
+    opacity: .6;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청 시스템</title>
+    <style> @import url("index.css");</style>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+
+<script>
+    let timer;
+    let timeLeft = 1800; // 30 minutes in seconds
+
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timer = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert('시간이 만료되었습니다.');
+            } else {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60); // 남은 분
+                let seconds = timeLeft % 60; // 남은 초
+                timerDisplay.textContent = `${minutes}: ${seconds < 10 ? '0' + seconds : seconds}`;
+            }
+        }, 1000);
+    }
+    function extendTimer() {
+            clearInterval(timer);
+            timeLeft = 1800;
+            startTimer();
+        }
+    
+    window.onload = function () {
+        startTimer();
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const toggle1 = document.getElementById('toggle1');
+    const toggle2 = document.getElementById('toggle2');
+
+    const options = {
+        fruits: ['--선택--', '공통교양', '선택-도전', '선택-소통', '선택-신뢰', '선택-융합'],
+        sw: ['--선택--', '소프트웨어학부', 'AI학과']
+    };
+
+    toggle1.addEventListener('change', (event) => {
+        const selectedOption = event.target.value;
+        updateToggle2Options(selectedOption);
+    });
+
+    function updateToggle2Options(selectedOption) {
+        // Clear existing options
+        toggle2.innerHTML = '';
+
+        if (selectedOption && options[selectedOption]) {
+            options[selectedOption].forEach(item => {
+                const optionElement = document.createElement('option');
+                optionElement.value = item.toLowerCase();
+                optionElement.textContent = item;
+                toggle2.appendChild(optionElement);
+            });
+        } else {
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Select an option';
+            toggle2.appendChild(defaultOption);
+        }
+    }
+});
+</script>
+
+
+<body>
+    <div class="container">
+        <div class="content">
+            <ul class="sw-tabs" id="Tabs" style="list-style: none; border-bottom: #2155a4 1px solid;">
+                <div style="flex: 1 0 0px;
+                min-width: 0;
+                max-width: 650px;
+                width: auto;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                margin-left: -40px;
+                padding-bottom: -10px;
+                border: 1px solid #e1e1e1;
+                background: #f9f9f9;
+                font-size: 13px;
+                color: #666;
+                line-height: 1.1;
+                text-align: center;
+                cursor: pointer;
+                transition: all .3s;">
+                    <li data-id="tab_01" id="menu01" class="is-active" style="width:200px; height:40px; text-decoration: none; background-color: #2155a4;"><span style="color: white; "><br>수강신청 안내</span></li>
+                    <li data-id="tab_02" id="menu02" class="is-active" style="width:200px; height:40px; text-decoration: none;"><br><a href="subjectclick.html" style="text-decoration-line: none; color: rgb(117, 116, 116);">수강신청</a></li>
+                    <li data-id="tab_03" id="menu03" class="is-active" style="width:200px; height:40px; text-decoration: none;"><br><a href="cancelmain.html" style="text-decoration-line: none; color: rgb(117, 116, 116);">수강신청내역(취소)</a></li>
+                    <hr>
+                </div>  
+            </ul>
+            
+            <div class="main-content">
+                
+                <div class="notice">
+                    <div class="full-screen-box">
+                        <p style="font-weight:bold;"><li><span style="color: red;">☞ 수강신청 기간이 아닙니다.</span></li></p>
+                        <p style="font-weight: bold;">2024학년도 하계 계절학기 수강신청 안내</p><br><br>
+                        <p>1. 2024학년도 하계 계절학기는 서울캠퍼스 및 다빈치캠퍼스에서 진행</p>
+                        <p style="margin-top: -10px;">※ 계절학기는 캠퍼스 구분 없이 수강 가능</p>
+                        <p style="margin-top: 25px;">2. 2024-1학기 수강중인 과목은 2024-하계 계절학기에 수강신청 불가함</p>
+                        <p style="margin-top: 25px;">3. 계절학기 최대 이수 가능 학점: 학기 별 최대 6학점 이하(현장실습, 사회봉사 등은 제외)</p>
+                        <p style="margin-top: -10px;">※ 수강신청 학점 제한 : 개강 후 수강과목을 취소하는 경우 취소한 학점만큼 다음 계절학기 수강신청 학점에 제한</p>
+                        <p style="margin-top: 25px;">4. 휴학생의 경우 다음 학기 복학을 전제로 계절학기 수강 가능</p>
+                        <p style="margin-top: 25px;">5. 공학인증 과목으로 개설된 과목과 창의ICT공과대학(부) 학생 우선 수강 신청 후 여석 조정 진행</p>
+                        <p style="margin-top: -10px;">※ 세부적인 사항은 공학교육혁신센터(02-820-6558)에 문의</p>
+                        <p style="font-weight: bold; margin-top: 25px; ">6. 교양과목 수강신청 안내</p>  
+                        <p style="margin-top: -10px;">- 「English for Professional Track」▶ English2 대체과목</p>  
+                        <p style="margin-top: -10px;">- English for Professional Track(Business, Economics) (과목코드 53800)</p>
+                        <br>
+
+                        <div class="highlight" style="color: red;">
+                            <p>7. 수강신청 종료 후 수강취소 기간에 따른 등록금 환불 기준 </p>
+                            <p style="margin-top: -10px;">1)일반 과목</p>
+                            <p style="margin-top: -10px;">-등록금 전액: 2024.06.17.(월) 10:00 ~ 2024.06.23.(일) 23:00</p>
+                            <p style="margin-top: -10px;"> &nbsp;계절학기 개강전까지</p>
+                            <p style="margin-top: -10px;">-등록금의 6분의 5 해당액: 2024.06.24.(월) 1:00 ~ 2024.06.26.(수) 23:00</p>
+                            <p style="margin-top: -10px;"> &nbsp;계절학기 개시일부터 3일 이내</p>
+                            <p style="margin-top: -10px;">-등록금의 3분의 2 해당액: 2024.06.27.(목) 1:00 ~ 2024.06.28.(금) 23:00</p>
+                            <p style="margin-top: -10px;"> &nbsp;계절학기 개시일부터 5일 이내</p>
+                            <p style="margin-top: -10px;">-등록금의 2분의 1 해당액: 2024.06.29.(토) 1:00 ~ 2024.07.03.(수) 23:00</p>
+                            <p style="margin-top: -10px;"> &nbsp;계절학기 개시일부터 8일 이내</p>
+                            <p style="margin-top: -10px;">-반환하지 아니함: 2024.07.03.(수) 23:00 이후 수강취소 및 환불 불가</p>
+                            <p style="margin-top: -10px;"> &nbsp;개시일부터 8일 이후 환불액 없음</p>
+                            <br>
+                            <p style="margin-top: -10px;">2)가상융합대학 8일 집중 운영 과목</p>
+                            <p style="margin-top: -10px;">-등록금 전액: 2024.06.17.(월) 10:00 ~ 2024.06.23.(일) 23:00</p>
+                            <p style="margin-top: -10px;">-등록금의 6분의 5 해당액: 2024.06.24.(월) 1:00 ~ 23:00</p>
+                            <p style="margin-top: -10px;">-등록금의 3분의 2 해당액: 2024.06.25.(화) 1:00 ~ 23:00</p>
+                            <p style="margin-top: -10px;">-등록금의 2분의 1 해당액: 2024.06.26.(수) 1:00 ~ 2024.06.27.(목) 23:00</p>
+                            <p style="margin-top: -10px;">- 반환하지 아니함 : 2024.06.27.(목) 23:00 이후 수강취소 및 환불 불가</p>
+                            <br>
+                            <p style="font-weight: bold; margin-top: -10px;">※ 매일 23시부터 익일 1시까지 은행 전산 점검으로 계좌 저장 불가</p>
+                            <p style="font-weight: bold; margin-top: -10px;">※ 해당일 23시 이전에 필히 저장(23시 이후에는 날짜에 따라 반환 금액 변경)</p>
+                        </div>
+
+                        <div>
+                            <br>
+                            <p style="margin-top: -5px;">8. 기타사항은 “2024학년도 하계 계절학기 시행 안내” 참고</p>
+                            <p style="margin-top: -10px;">※ 계절학기 개설과목 및 강의시간이 일부 변경될 수 있으니 확인 후 수강신청 하시기 바랍니다.</p>
+                            <br>
+                            <p style="margin-top: -5px;">9. 수강신청 이후 실제 수강인원에 따라 강의실이 변경될 수 있음</p>
+                            <br>
+                            <p style="margin-top: -5px;">10. 문의사항</p>
+                            <p style="margin-top: -10px;">- 계절학기 및 교양과목 관련 문의 : 교양대학(서울)(☎ 02-820-6631, 6638, 6639, 6060) / 교양대학(다빈치)(☎031-670-4820, 4824)</p>
+                            <p style="margin-top: -10px;">- 전공과목 여석 관련 문의 : 해당 단과대학 교학지원팀(연락처는 계절학기 시행 안내 공지사항의 붙임 페이지 참조)</p>
+            
+                            <p style="margin-top: -10px;">- 공학인증 과목 여석 관련 문의 : 공학교육혁신센터(☎ 02-820-6558)</p>
+                            <p style="margin-top: -10px;">- 국내대학 학점교류 관련 문의 : 학사팀(☎ 02-820-6034)</p>
+                            <p style="margin-top: -10px;">- 수강료 수납 및 환불 관련 문의 : 재무회계팀(☎ 02-820-6880, 6881, 6072)</p>
+                            <p style="margin-top: -10px;">- e-class 관련 문의 : 원격교육지원센터(☎ 02-820-6441~6444)</p>
+                            <br><br><br><br>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

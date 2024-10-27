@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청 시스템</title>
+    <style>
+        @import url("header.css");
+
+        /* 탭이 선택되었을 때 스타일 */
+        .sidebar-button.active {
+            color: blue;
+        }
+    </style>
+    <link href="css/header.css" rel="stylesheet"/>
+</head>
+
+<script type="text/javascript">
+    // 시간 연장
+    let timer;
+    let timeLeft = 1800; // 30 minutes in seconds
+
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timer = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert('시간이 만료되었습니다.');
+            } else {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60); // 남은 분
+                let seconds = timeLeft % 60; // 남은 초
+                timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+            }
+        }, 1000);
+    }
+
+    function extendTimer() {
+        clearInterval(timer);
+        timeLeft = 1800;
+        startTimer();
+    }
+
+    function loadPage(url, element) {
+        // iframe에 새 페이지 로드
+        document.getElementById('content-frame').src = url;
+
+        // 모든 탭에서 active 클래스 제거
+        document.querySelectorAll('.sidebar-button').forEach(button => button.classList.remove('active'));
+
+        // 클릭된 탭에 active 클래스 추가
+        element.classList.add('active');
+    }
+
+    window.onload = function () {
+        startTimer();
+        // 시스템 유의사항 페이지를 기본 선택 상태로 로드
+        const defaultButton = document.querySelector('.sidebar-button[data-default]');
+        if (defaultButton) {
+            loadPage('notice.html', defaultButton);
+        }
+    };
+</script>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <button class="language-button is-active">한글</button>
+                <button class="language-button">ENG</button>
+                <button class="language-button">中文</button>
+            </div>
+            <div class="sidebar-main">
+                <h2>수강신청</h2>
+                <ul>
+                    <li><button class="sidebar-button" data-default onclick="loadPage('notice.html', this)">시스템 유의사항</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('apply.html', this)">수강신청</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('basket.html', this)">장바구니</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('search.html', this)">강의시간표 조회</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('table.html', this)">개인시간표</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('substitute.html', this)">동일대체과목조회</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('faq.html', this)">수강신청FAQ</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('board.html', this)">수강신청게시판</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('change.html', this)">시간표 변경내역</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('confirmation.html', this)">수강신청확인원</button></li>
+                    <li><button class="sidebar-button" onclick="loadPage('search_preference.html', this)">선호 검색조건 관리</button></li>
+                </ul>
+                <hr>
+                <h2>성적조회</h2>
+                <ul>
+                    <li><button class="sidebar-button" onclick="loadPage('grade.html', this)">금학기성적조회 및 이의신청</button></li>
+                </ul>
+                <hr>
+            </div>
+            <div class="sidebar-footer">
+                <button class="manual-download" id="Open_menualPC">매뉴얼 다운로드(PC)</button>
+                <button class="manual-download" id="Open_menualMB">매뉴얼 다운로드(모바일)</button>
+                <script>
+                    // 버튼 클릭 이벤트 리스너 추가
+                    document.getElementById("Open_menualPC").addEventListener("click", function() {
+                        // 메뉴얼pc 파일 URL
+                        var syllabusUrl = 'menual_pc.pdf';
+                        
+                        // 새 창으로 메뉴얼 파일 열기
+                        window.open(syllabusUrl, '_blank');
+                    });
+
+                    // 버튼 클릭 이벤트 리스너 추가
+                    document.getElementById("Open_menualMB").addEventListener("click", function() {
+                        // 메뉴얼 파일 URL
+                        var syllabusUrl = 'menual_mobile.pdf';
+                        
+                        // 새 창으로 메뉴얼 파일 열기
+                        window.open(syllabusUrl, '_blank');
+                    });
+                </script>
+                <div class="copy">
+                    Copyright 2020 Chung-Ang University. <br> All Rights Reserved.
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="header">
+                <div class="cau-info">
+                    <img src="https://blog.kakaocdn.net/dn/2iE2m/btrNRPKCm94/ZGZdLpqUq9bZqyCTvYqMHk/img.png" alt="Logo" width="60" height="50px">
+                    <span class="cau-title">
+                        <b>2024학년도 하계학기</b>
+                    </span>
+                </div>
+                <div class="user-info">
+                    <div class="user-name">
+                        <b>권효윤(20220361)  |  학년(가진급학년) 3(3)  |  </b>
+                        <span class="split"><b>  제한학점 6</b></span>
+                    </div>
+                    <div class="login">
+                        <span class="timer" id="timer">30:00</span>
+                        <button class="extend" onclick="extendTimer()">연장하기</button>
+                    </div>
+                    <button type="button" class="btn-logout" onclick="aaaa()">로그아웃</button>
+
+                    <script language="javascript">
+                        function aaaa(){
+                            if(confirm("로그아웃 하시겠습니까?")){  // confirm()은 확인,취소창 입니다.
+                              window.location.href = "login0.html";   // 현재 윈도우의 경로 변경하라는 거에요.
+                      
+                            } else {
+                               alert('로그인 상태를 유지합니다.'); //위에서 배운 alert 이군요. 경고창이 또 뜹니다.
+                            }
+                       }
+                    </script>
+                </div>
+            </div>
+            <iframe id="content-frame" src="notice.html" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</body>
+</html>

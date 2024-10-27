@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <title>중앙대학교 수강신청 시스템</title>
+    <style>
+        body {
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            background-color: white;
+        }
+        .login-left {
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(225, 225, 245);
+            width: 450px;
+            height: 500px; /* Adjust height as needed */
+        }
+        .login-left .top-section {
+            background-color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .login-left .bottom-section {
+            background-color: rgb(225, 225, 245);
+            padding: 20px;
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+        .login-right {
+            background-color: rgb(40, 40, 119);
+            color: white;
+            width: 450px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .login form input[type="text"],
+        .login form input[type="password"] {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .login form input[type="submit"] {
+            width: 100%;
+            height: 50px;
+            background-color: rgb(102, 51, 153); /* Purple color */
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .additional-links {
+            font-size: 13px;
+            text-align: center;
+        }
+        .additional-links a {
+            text-decoration: none;
+            color: black;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-left">
+            <div class="top-section">
+                <p style="font-size: 20px; text-align: center;">수강신청 / 성적조회 시스템</p>
+                <form id="loginForm">
+                    <div style="text-align: center;">
+                        <label>
+                            <input type="radio" name="option" value="1" checked>
+                            <span style="font-size: 14px;">한글</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="option" value="2">
+                            <span style="font-size: 14px;">ENG</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="option" value="3">
+                            <span style="font-size: 14px;">中文</span>
+                        </label>
+                    </div>
+                </form>
+                <br><br>
+            </div>
+            <div class="bottom-section">
+                <form id="loginForm">
+                    <div style="text-align: center;">
+                        <input type="text" id="userName" placeholder="아이디를 입력하세요." required style="width: 330px; height: 30px; margin-bottom: 15px; margin-top: 5px;">
+                        <input type="password" id="userPassword" placeholder="비밀번호를 입력하세요." style="width: 330px; height: 30px; margin-bottom: 25px;"></p>
+                        <input type="button" value="로그인" style="width: 340px; height: 50px; background-color: rgb(40, 40, 119); color: white; font-weight: bold; font-size: 15px;" onclick="login()">
+                    </div>
+                </form>
+                <div class="additional-links" style="margin-left: -30px;">
+                    <br>
+                    <a href="#" >아이디찾기</a>
+                    <a href="#" style="margin-left: -10px;">|비밀번호찾기</a>
+                    <a href="#" style="font-weight: bold;" style="margin-right: 20px;">통합ID발급</a>
+                </div>
+            </div>
+        </div>
+        <div class="login-right">
+            <img src="login-logo.png" alt="Logo" width="200px" height="50px">
+            <br>
+            <img src="img-login.png" alt="Logo" width="60" height="50">
+            <br>
+            <ul style="width: 420px;">
+                <li style="margin-bottom: 10px; font-size: 14px;">다중 접속이 제한됩니다.<br>(여러 개의 탭, 창, PC/모바일 등 시접속 모두 제한됩니다.)</li>
+                <li style="margin-bottom: 10px; font-size: 14px;">매크로방지 시스템(일정횟수 이상 클릭 또는 기간내 과도한 클릭시 매크로 방지 시스템이 실행됩니다.)</li>
+                <li style="margin-bottom: 10px; font-size: 14px;">크롬, 파이어폭스 브라우저에 최적화 되어있습니다.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function login() {
+            var userName = document.getElementById("userName").value;
+            var userPassword = document.getElementById("userPassword").value;
+        
+            // 아이디와 비밀번호가 입력되었는지 확인
+            if (userName && userPassword) {
+                // AJAX를 사용하여 로그인 API 호출
+                $.ajax({
+                    type: "GET",
+                    url: "login.php",
+                    data: { userName: userName, userPassword: userPassword },
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response); // 서버 응답 확인
+                        if (response.success) {
+                            // 로그인 성공 시 페이지 이동
+                            window.location.href = "header.html";
+                        } else {
+                            // 로그인 실패 시 경고 메시지 표시
+                            alert("아이디 또는 비밀번호가 잘못되었습니다.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText); // 오류 메시지 확인
+                        alert("로그인에 문제가 발생했습니다. 관리자에게 문의하세요.");
+                    }
+                });
+            } else {
+                // 입력이 안된 경우에는 이동하지 않음
+                alert("아이디와 비밀번호를 입력해주세요.");
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>

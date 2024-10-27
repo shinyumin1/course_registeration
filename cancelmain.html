@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Light Gray Box</title>
+    <style>
+
+.content {
+    flex-grow: 1;
+}
+
+.txt-blue {
+    color: #0085ca !important;
+}
+
+.btn-menu {
+    width: 60px;
+    height: 100%;
+    background: url(../img/layout/icon-menu.png) no-repeat 50% 50%;
+    opacity: .6;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+td{
+    border: rgba(205, 202, 202, 0.537) 0.5px solid;;
+}
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청 시스템</title>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+
+<script>
+    let timer;
+    let timeLeft = 1800; // 30 minutes in seconds
+
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timer = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert('시간이 만료되었습니다.');
+            } else {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60); // 남은 분
+                let seconds = timeLeft % 60; // 남은 초
+                timerDisplay.textContent = `${minutes}: ${seconds < 10 ? '0' + seconds : seconds}`;
+            }
+        }, 1000);
+    }
+    function extendTimer() {
+            clearInterval(timer);
+            timeLeft = 1800;
+            startTimer();
+        }
+    
+    window.onload = function () {
+        startTimer();
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const toggle1 = document.getElementById('toggle1');
+    const toggle2 = document.getElementById('toggle2');
+
+    const options = {
+        fruits: ['--선택--', '공통교양', '선택-도전', '선택-소통', '선택-신뢰', '선택-융합'],
+        sw: ['--선택--', '소프트웨어학부', 'AI학과']
+    };
+
+    toggle1.addEventListener('change', (event) => {
+        const selectedOption = event.target.value;
+        updateToggle2Options(selectedOption);
+    });
+
+    function updateToggle2Options(selectedOption) {
+        // Clear existing options
+        toggle2.innerHTML = '';
+
+        if (selectedOption && options[selectedOption]) {
+            options[selectedOption].forEach(item => {
+                const optionElement = document.createElement('option');
+                optionElement.value = item.toLowerCase();
+                optionElement.textContent = item;
+                toggle2.appendChild(optionElement);
+            });
+        } else {
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Select an option';
+            toggle2.appendChild(defaultOption);
+        }
+    }
+});
+</script>
+
+
+<body>
+    <div class="container">
+
+        <div class="content">
+            
+            <ul class="sw-tabs" id="Tabs" style="list-style: none; border-bottom: #2155a4 1px solid; ">
+                <div style="flex: 1 0 0px;
+                min-width: 0;
+                max-width: 650px;
+                width: auto;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                height: 40px;
+                margin-left: -40px;
+                padding-bottom: -10px;
+                border: 1px solid #e1e1e1;
+                background: #f9f9f9;
+                font-size: 13px;
+                color: #666;
+                line-height: 1.1;
+                text-align: center;
+                cursor: pointer;
+                transition: all .3s;
+                ">
+                    <li data-id="tab_01" id="menu01" class="is-active" style="width:200px; height:40px; text-decoration: none;"><br><a href="apply.html" style="text-decoration-line: none; color: rgb(117, 116, 116);">수강신청안내</a></li>
+                    <li data-id="tab_02" id="menu02" class="is-active" style="width:200px; height:40px; text-decoration: none;"><br><a href="subjectclick.html" style="text-decoration-line: none; color: rgb(117, 116, 116);">수강신청</a></li>
+                    <li data-id="tab_03" id="menu03" class="is-active" style="width:200px; height:40px; text-decoration: none; background-color: #2155a4;"><span style="color: white;"><br>수강신청내역(취소)</li>
+                    
+                </div>  
+            </ul>
+            
+            <div>
+                <br>
+                <h4 style="font-size: 15px; padding-bottom: 0px; "> ▣ 수강신청 내역   [ 신청과목수 : <span style="color: red;">1</span>  신청학점 : <span style="color: red;">2</span> ]</h4>
+            </div>
+            <div class="main-content">
+                
+                <div class="notice">
+                   <table style="font-size: 13px; border-top: black 1px solid;border-bottom: rgb(197, 196, 196) 1px solid;border-spacing : 0px;">
+                    
+                    <tr style="background-color: #dae1eb;">
+                        <td style="width: 80px; text-align: center;">캠퍼스</td>
+                        <td style="width: 150px; text-align: center;">과목번호-분반</td>
+                        <td style="width: 200px; text-align: center;">과목명</td>
+                        <td style="width: 80px; text-align: center;">폐강</td>
+                        <td style="width: 80px; text-align: center;">이수구분</td>
+                        <td style="width: 80px; text-align: center;">교양영역</td>
+                        <td style="width: 100px; text-align: center;">재수강</td>
+                        <td style="width: 100px; text-align: center;">학점</td>
+                        <td style="width: 150px; text-align: center;">담당교수</td>
+                        <td style="width: 300px; text-align: center;">강의시간</td>
+                        <td style="width: 200px; text-align: center;">기이수<br>년도/학기/과목</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 80px; text-align: center;">서울</td>
+                        <td style="width: 150px; text-align: center;">42183-01</td>
+                        <td style="width: 200px; text-align: center;"><a href="#" id="Open_syllabus" style ="text-decoration-line : none;">글쓰기</a></td>
+                        <td style="width: 80px; text-align: center;"></td>
+                        <td style="width: 80px; text-align: center;">교양</td>
+                        <td style="width: 80px; text-align: center;">공통교양</td>
+                        <td style="width: 100px; text-align: center;"></td>
+                        <td style="width: 100px; text-align: center;">2</td>
+                        <td style="width: 150px; text-align: center;">강유진</td>
+                        <td style="width: 300px; text-align: center;">월1,2 / 화1,2 / 수1,2 / 목1,2 / 금1,2<br><span style="text-align: left;">00 00000</span></td>
+                        <td style="width: 200px; text-align: center;"></td>
+
+                        <script>
+                            // 버튼 클릭 이벤트 리스너 추가
+                            document.getElementById("Open_syllabus").addEventListener("click", function() {
+                                // 강의계획서 파일 URL
+                                var syllabusUrl = '글쓰기_강의계획서.pdf';
+                                
+                                // 새 창으로 강의계획서 파일 열기
+                                window.open(syllabusUrl, '_blank');
+                            });
+                        </script>
+                    </tr>
+
+
+                   </table>
+                        
+
+                       
+
+                       
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청 시스템</title>
+    <style> @import url("header.css");</style>
+    <link href="css/header.css" rel="stylesheet"/>
+</head>
+
+<script type="text/javascript">
+    // 시간 연장
+    let timer;
+    let timeLeft = 1800; // 30 minutes in seconds
+
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timer = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert('시간이 만료되었습니다.');
+            } else {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60); // 남은 분
+                let seconds = timeLeft % 60; // 남은 초
+                timerDisplay.textContent = `${minutes}: ${seconds < 10 ? '0' + seconds : seconds}`;
+            }
+        }, 1000);
+    }
+    function extendTimer() {
+            clearInterval(timer);
+            timeLeft = 1800;
+            startTimer();
+        }
+    
+    window.onload = function () {
+        startTimer();
+    };
+    
+    // 로그아웃
+
+    // 선택
+    document.addEventListener('DOMContentLoaded', () => {
+    const pCol = document.getElementById('pCol');
+    const pSust = document.getElementById('pSust');
+
+    const options = {
+        '00000': ['--선택--', '공통교양', '선택-도전', '선택-소통'],
+        'LNK': ['--선택--', '게임-애니메이션 연계전공', '공공관리 연계전공', '공공규범 연계전공'],
+        'FSN': ['--선택--', '게임-인터렉티브미디어융합전공','금융AI융합전공', '금융공학융합전공'],
+        '3B500': ['--선택--', '소프트웨어학부', 'AI학과']
+    };
+
+    pCol.addEventListener('change', (event) => {
+        const selectedOption = event.target.value;
+        updateSustOptions(selectedOption);
+    });
+
+    function updateSustOptions(selectedOption) {
+        pSust.innerHTML = '';
+
+        if (selectedOption && options[selectedOption]) {
+            options[selectedOption].forEach(item => {
+                const optionElement = document.createElement('option');
+                optionElement.value = item.toLowerCase();
+                optionElement.textContent = item;
+                pSust.appendChild(optionElement);
+            });
+        } else {
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = '--선택--';
+            pSust.appendChild(defaultOption);
+        }
+    }
+
+    // 조회
+    document.getElementById('btnSearch').addEventListener('click', function() {
+        const pColValue = document.getElementById('pCol').value;
+        const pSustValue = document.getElementById('pSust').value;
+        const inputValue = document.getElementById('pKorNm').value.trim();
+        const tbody = document.querySelector('.t-title tbody');
+        
+        if (!pColValue || !pSustValue) {
+            return;
+        }
+
+        let showAlert = false;
+
+        if (pColValue === '3B500' && pSustValue === '소프트웨어학부') {
+            tbody.innerHTML = `
+            <tr value="AI시대문제해결을위한디자인사고">
+                <td>대학(전체)</td>
+                <td></td>
+                <td>1</td>
+                <td>교양</td>
+                <td>56424-01</td>
+                <td value="AI시대문제해결을위한디자인사고">AI시대문제해결을위한디자인사고</td>
+                <td>2</td>
+                <td>진영기</td>
+                <td></td>
+                <td>화7,8 310관 723호 <강의실> </td>
+                <td></td>
+                <td></td>
+                <td>공통교양 MACH 교양/공학인증(전문)</td>
+            </tr>
+            <tr value="자료구조">
+                <td>소프트웨어대학</td>
+                <td>소프트웨어학부</td>
+                <td>2</td>
+                <td>전필</td>
+                <td>40989-01</td>
+                <td value="자료구조">자료구조</td>
+                <td>3</td>
+                <td>김무철</td>
+                <td></td>
+                <td>화5,6 / 목6 310관 729호 <강의실> </td>
+                <td></td>
+                <td></td>
+                <td>공학주제, 코드쉐어(전전)</td>
+            </tr>
+            <tr value="소프트웨어공학">
+                <td>소프트웨어대학</td>
+                <td>소프트웨어학부</td>
+                <td>3</td>
+                <td>전필</td>
+                <td>11708-01</td>
+                <td value="소프트웨어공학">소프트웨어공학</td>
+                <td>3</td>
+                <td>이찬근</td>
+                <td></td>
+                <td>화10, 11, 12</td>
+                <td>혼합형(실시간+동영상)</td>
+                <td></td>
+                <td>공학주제(설계1)</td>
+            </tr>
+            `;
+        } else {
+            showAlert = true;
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="13" style="text-align:center;">선택한 조건의 과목이 존재하지 않습니다.</td>
+                </tr>`;
+        }
+
+        // 교과목명 입력값이 없으면 여기서 함수 종료 (조건에 맞는 과목 없다는 메시지는 이미 처리됨)
+        if (!inputValue) {
+            if (showAlert && !(pColValue === '3B500' && pSustValue === '소프트웨어학부')) {
+            alert('선택한 조건의 과목이 존재하지 않습니다.');
+            }
+            return;
+        }
+
+        // 모든 행 숨기기
+        const allRows = document.querySelectorAll('.t-title tbody tr');
+        allRows.forEach(function(row) {
+            row.style.display = 'none';
+        });
+
+        // 입력된 값과 일치하는 행 찾아서 보이기
+        const matchedRows = document.querySelectorAll('.t-title tbody tr td[value="' + inputValue + '"]');
+        matchedRows.forEach(function(row) {
+            row.parentElement.style.display = ''; // 부모인 tr을 보이게 함
+        });
+
+        // 입력된 값과 일치하는 행이 없는 경우 메시지 표시
+        if (matchedRows.length === 0) {
+            alert('선택한 조건의 과목이 존재하지 않습니다.');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="13" style="text-align:center;">선택한 조건의 과목이 존재하지 않습니다.</td>
+                </tr>`;
+        }
+    });
+
+    // 초기화
+    document.getElementById('btnReset').addEventListener('click', function() {
+        document.getElementById('pYear').value = '2024';
+        document.getElementById('pCourse').value = '3';
+        document.getElementById('pCol').value = '';
+        document.getElementById('pSust').innerHTML = '<option value="">--선택--</option>';
+        document.getElementById('pKorNm').value = '';   
+        document.getElementById('pShtm').value = 'S';
+        document.getElementById('pCampus').value = '1';
+        document.getElementById('pDay').value = '';
+        document.getElementById('pLttm').value = '';
+
+        const tbody = document.querySelector('.t-title tbody');
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="13" style="text-align:center;">검색 조건 선택 후 조회 버튼을 클릭하세요.</td>
+            </tr>`;
+    });
+    
+});
+
+</script>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <button class="language-button is-active">한글</button>
+                <button class="language-button">ENG</button>
+                <button class="language-button">中文</button>
+            </div>
+            <div class="sidebar-main">
+                <h2>수강신청</h2>
+                <ul>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">시스템 유의사항</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">수강신청</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">장바구니</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">강의시간표 조회</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">개인시간표</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">동일대체과목조회</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">수강신청FAQ</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">수강신청게시판</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">시간표 변경내역</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">수강신청확인원</button></li>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">선호 검색조건 관리</button></li>
+                </ul>
+                <hr>
+                <h2>성적조회</h2>
+                <ul>
+                    <li><button class="sidebar-button" onclick="handleButtonClick(this)">금학기성적조회 및 이의신청</button></li>
+                </ul>
+                <hr>
+            </div>
+            <div class="sidebar-footer">
+                <button class="manual-download">매뉴얼 다운로드(PC)</button>
+                <button class="manual-download">매뉴얼 다운로드(모바일)</button>
+                <div class="copy">
+                    Copyright 2020 Chung-Ang University. <br> All Rights Reserved.
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="header">
+                <div class="cau-info">
+                    <img src="https://blog.kakaocdn.net/dn/2iE2m/btrNRPKCm94/ZGZdLpqUq9bZqyCTvYqMHk/img.png" alt="Logo" width="60" height="50px">
+                    <span class="cau-title">
+                        <b>2024학년도 하계학기</b>
+                    </span>
+                </div>
+                <div class="user-info">
+                    <div class="user-name">
+                        <b>권효윤(20220361)  |  학년(가진급학년) 3(3)  |  </b>
+                        <span class="split"><b>  제한학점 6</b></span>
+                    </div>
+                    <div class="login">
+                        <span class="timer" id="timer">30: 00</span>
+                        <button class="extend" onclick="extendTimer()">연장하기</button>
+                    </div>
+                    <button type="button" class="btn-logout" onclick="alert('로그아웃')">로그아웃</button>
+                </div>
+            </div>
+
+            <div class="form">
+                <form name="sForm" id="sForm" method="post" onsubmit="return false">
+                    <table>
+                        <colgroup>
+                            <col width="50px">
+                            <col width="70px">
+                            <col width="60px">
+                            <col width="100px">
+                            <col width="150px">
+                            <col width="100px">
+                            <col width="100px">
+                            <col width="180px">
+                            <col>
+                        </colgroup>
+
+                        <tbody>
+                            <tr>
+                                <th class="t-name">년도</th>
+                                <td><select name="pYear" id="pYear">
+                                        <option value="2024" selected="">2024</option>
+                                        <option value="2023">2023</option>   
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option> 
+                                        <option value="2020">2020</option>     
+                                    </select>
+                                </td>
+                                <th class="t-name">과정</th>
+                                <td>
+                                    <select name="pCourse" id="pCourse" onchange="fnCol()">
+                                        <option value="3" selected="">학부</option>
+                                        <option value="2">대학원</option>
+                                    </select>
+                                </td>
+                                <th for="toggle1" class="t-name">대학(원)/교양/연계/융합</th>
+                                <td>
+                                    <div class="cols">
+                                        <select name="pCol" id="pCol" onchange="fnSust()">
+                                            <option value="">--선택--</option>
+                                            <option value="00000">교양</option>
+                                            <option value="LNK">연계전공</option>
+                                            <option value="FSN">융합전공</option>
+                                            <option value="">------------------------------</option>
+                                            <option value="3B500">소프트웨어대학</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <th class="t-name">교과목명</th>
+                                <td>
+                                    <input type="text" name="pKorNm" id="pKorNm" maxlength="50">
+                                </td>
+                            </tr>
+                            <tr>	
+                                <th class="t-name">학기</th>
+                                <td>
+                                    <select name="pShtm" id="pShtm">
+                                        <option value="1">1학기</option>
+                                        <option value="S" selected="">여름계절</option>
+                                        <option value="2">2학기</option>
+                                        <option value="W">겨울계절</option>
+                                    </select>
+                                </td>
+                                <th class="t-name">캠퍼스</th>
+                                <td>
+                                    <select name="pCampus" id="pCampus" onchange="fnCol()">
+                                        <option value="1" selected="">서울</option>
+                                        <option value="2">다빈치</option>
+                                    </select>
+                                </td>
+                                <th class="t-name">학부(과)/전공/영역</th>
+                                <td>
+                                    <div class="cols">
+                                        <select name="pSust" id="pSust" onchange="">
+                                            <option value="">--선택--</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <th class="t-name">요일/교시</th>
+                                <td style="display: flex">
+                                    <select name="pDay" id="pDay" style="width:60px;">
+                                        <option value="">전체--</option>
+                                        <option value="1">월</option>
+                                        <option value="2">화</option>
+                                        <option value="3">수</option>
+                                        <option value="4">목</option>
+                                        <option value="5">금</option>
+                                        <option value="6">토</option>
+                                    </select>&nbsp;
+                                    <select id="pLttm" name="pLttm" style="width:160px;">
+                                        <option value="">--전체--</option>
+                                        <option value="0A">0A교시 [ 0730-0845 ]</option>
+                                        <option value="0">0교시 [ 0800-0850 ]</option>
+                                        <option value="1">1교시 [ 0900-0950 ]</option>
+                                        <option value="A">A교시 [ 0900-1015 ]</option>
+                                        <option value="S1">S1교시 [ 1000-1120 ]</option>
+                                    </select>    
+                                </td>
+                                <td>
+                                    <button type="button" id="btnSearch" class="btn-sub1">조회</button>
+                                    <button type="button" id="btnReset" class="btn-sub2"onclick="javascript:fnReset()">초기화</button>
+                                    <button type="button" id="btnExcel" class="btn-sub2">Excel</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <table class="t-title">
+                <thead>
+                    <tr>
+                        <th style="width: 9%;">대학</th>
+                        <th style="width: 9%;">개설학과</th>
+                        <th style="width: 4%;">학년</th>
+                        <th style="width: 7%;">이수구분</th>
+                        <th style="width: 9%;">과목번호-분반</th>
+                        <th style="width: 10%;">과목명</th>
+                        <th style="width: 4%;">학점</th>
+                        <th style="width: 7%;">담당교수</th>
+                        <th style="width: 4%;">폐강</th>
+                        <th style="width: 9%;">강의시간</th>
+                        <th style="width: 7%;">강의유형</th>
+                        <th style="width: 7%;">유연학기</th>
+                        <th style="width: 13%;">비고</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="13" style="text-align: center;">검색 조건 선택 후 조회 버튼을 클릭하세요.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="footer">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수강신청 시스템</title>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+
+<script type="text/javascript">
+    /* 시간 연장 */
+    let timer;
+    let timeLeft = 1800; // 30 minutes in seconds
+
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timer = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert('시간이 만료되었습니다.');
+            } else {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60); // 남은 분
+                let seconds = timeLeft % 60; // 남은 초
+                timerDisplay.textContent = `${minutes}: ${seconds < 10 ? '0' + seconds : seconds}`;
+            }
+        }, 1000);
+    }
+    function extendTimer() {
+            clearInterval(timer);
+            timeLeft = 1800;
+            startTimer();
+        }
+    
+    window.onload = function () {
+        startTimer();
+    };
+    function fnLang(lang) {
+        // 모든 버튼을 기본 상태로 설정
+        document.querySelectorAll('.language-button').forEach(button => {
+            button.classList.remove('is-active');
+        });
+
+        // 선택된 언어 버튼에 is-active 클래스 추가
+        document.getElementById(`lang-${lang}`).classList.add('is-active');
+    }
+
+    // 초기 상태 설정
+    document.addEventListener('DOMContentLoaded', function() {
+        fnLang('ko'); // 페이지 로드 시 한글 버튼이 선택된 상태로 설정
+    });
+    function handleButtonClick(button) {
+        // 모든 버튼의 active 클래스 제거
+        document.querySelectorAll('.sidebar-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        // 클릭된 버튼에 active 클래스 추가
+        button.classList.add('active');
+    }
+</script>
+
+
+<body>
+    <div class="container">
+
+        <div class="content">
+
+            <div class="form">
+                <form name="sForm" id="sForm" method="post" onsubmit="return false">
+                    <table>
+                        <colgroup>
+                            <col width="50px">
+                            <col width="70px">
+                            <col width="60px">
+                            <col width="100px">
+                            <col width="150px">
+                            <col width="100px">
+                            <col width="100px">
+                            <col width="180px">
+                            <col>
+                        </colgroup>
+            </div>
+            <div class="main-content">
+                <h2 style="font-size: 20px; margin-top:20px;">► 시스템 유의사항</h2>
+                <div class="notice">
+                    <div class="full-screen-box">
+                        <p style="font-weight:bold;"><span class="red-arrow">&gt;</span> 매크로 프로그램 방지</p>
+                        <ul class="styled-list">
+                            <li>매크로프로그램 사용을 방지하기 위하여 관리자가 지정한 횟수이상 저장을 시도하면 화면에 나타나는 문자열을 입력하고 계속 사용하여야 함.</li>
+                            <li>문자열 오류 횟수가 지정된 횟수 이상이면 자동 로그아웃되고 문자열 입력이 올바를 경우 이전 요청이 자동 수행됨</li>
+                        </ul>
+                        <p style="font-weight:bold;"><span class="red-arrow">&gt;</span> 멀티 로그인 방지</p>
+                        <ul class="styled-list">
+                            <li>동일한 아이디로 여러 곳에서 로그인을 했을 경우 마지막 로그인만 유효하며 나머지는 로그아웃됨</li>
+                        </ul>
+                        <p style="font-weight:bold;"><span class="red-arrow">&gt;</span> 팝업차단 해제</p>
+                        <ul class="styled-list">
+                            <li>팝업차단 설정이 해제되지 않았을 경우 팝업차단을 해제</li>
+                            <li>크롬(Chrome) : 우측 상단 메뉴 오픈 -> 설정 -> 설정검색창에 "팝업" 검색 -> 사이트 설정 -> 팝업 및 디렉션 -> 팝업 허용 또는 사이트 추가</li>
+                            <li>파이어폭스(Firefox) : 우측 상단 메뉴 오픈 -> 설정 > 개인정보 및 보안 > 팝업 창 차단 체크 해지 또는 예외 목록에 등록</li>
+                            <li>팝업 설정 및 해제는 브라우저, 버전별로 방법이 다를 수 있으니 해당 브라우저 공식사이트 또는 검색을 통해 확인 바람</li>
+                        </ul>
+                        <p style="font-weight:bold;"><span class="red-arrow">&gt;</span> 모니터 해상도</p>
+                        <ul class="styled-list">
+                            <li>수강신청시스템은 1920*1080 해상도에 최적화되어 있으며 그 이상의 해상도로 화면 설정</li>
+                            <li>해상도가 작아 정상적으로 보이지 않을 경우 브라우저 확대, 축소 기능으로 사용자 환경에 맞게 조절 후 사용</li>
+                            <li>수강신청 전 미리 확인하여 수강신청 시 지장 없도록 유의하기 바람</li>
+                        </ul>
+                        <p style="font-weight:bold;"><span class="red-arrow">&gt;</span> 브라우저</p>
+                        <ul class="styled-list">
+                            <li>크롬, 파이어폭스 브라우저에 최적화 되어있음</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
